@@ -4,6 +4,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 case class Person(rating: String, income: Double, age: Int)
 
+// http://www.cakesolutions.net/teamblogs/spark-mllib-linear-regression-example-and-vocabulary
 object SparkPeople extends App {
 
   def prepareFeatures(people: Seq[Person]): Seq[org.apache.spark.mllib.linalg.Vector] = {
