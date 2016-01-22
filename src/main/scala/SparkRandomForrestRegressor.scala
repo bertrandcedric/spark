@@ -31,7 +31,7 @@ object SparkRandomForrestRegressor {
 
     println("########## Evaluate model on test instances")
     val labelAndPreds: RDD[(Double, Double)] = testData.map { point =>
-      val prediction = model.predict(point.features)
+      val prediction: Double = model.predict(point.features)
       (point.label, prediction)
     }
 
