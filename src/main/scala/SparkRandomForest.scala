@@ -12,36 +12,45 @@ object SparkRandomForest {
 
     //load train data
     val data = sc.textFile("data/train.csv")
-    val testData = sc.textFile("data/test.csv")
-
-
     val transformedData = data.map(d => {
-      val l = d.split(";").map(s => s.toDouble)
+      val l = d.split(",").map(s => s.toDouble)
       LabeledPoint(l.head, new DenseVector(l.tail))
     })
 
+    val testData = sc.textFile("data/trainCopie.csv")
     val transformedTestData = testData.map(d => {
       val l = d.split(";").map(s => s.toDouble)
       LabeledPoint(l.head, new DenseVector(l.tail))
     })
 
-    val numClasses = 2
+    val numClasses = 10
     val categoricalFeaturesInfo = Map[Int, Int]()
-    val numTrees = 3 // Use more in practice.
+    val numTrees = 5 // Use more in practice.
     val featureSubsetStrategy = "auto" // Let the algorithm choose.
     val impurity = "gini"
     val maxDepth = 4
-    val maxBins = 32
+    val maxBins = 100
 
 
-    val model = RandomForest.trainClassifier(transformedData, numClasses, categoricalFeaturesInfo,
-      numTrees, featureSubsetStrategy, impurity, maxDepth, maxBins)
+    val model = RandomForest.trainClassifier(
+      transformedData,
+      numClasses,
+      categoricalFeaturesInfo,
+      numTrees,
+      featureSubsetStrategy,
+      impurity,
+      maxDepth,
+      maxBins)
+
+    println("Learned classification forest model:\n" + model.toDebugString)
+
     val labelAndPreds = transformedTestData.map { point =>
       val prediction = model.predict(point.features)
       (point.label, prediction)
     }
     val testErr = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / testData.count()
     println("Test Error = " + testErr)
-    println("Learned classification forest model:\n" + model.toDebugString)
+    labelAndPreds.collect().foreach(println)
+
   }
 }
