@@ -8,3 +8,6 @@ Algorithms:
 => collaborative filtering: alternating least squares (ALS)
 => clustering: k-means
 => decomposition: singular value decomposition (SVD), principal component analysis (PCA)
+
+## graphic
+https://plot.ly/javascript/
