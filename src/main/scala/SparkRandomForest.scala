@@ -13,6 +13,7 @@ object SparkRandomForest {
     }
   }
 
+
   def main(args: Array[String]): Unit = {
     // Init spark context
     val conf = new SparkConf().setAppName("test").setMaster("local")
