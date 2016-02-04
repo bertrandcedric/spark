@@ -8,11 +8,7 @@ object SparkRandomForest {
   def mapTo1(d: Double): Double = {
     d match {
       case 0 => d
-      case x if x > 0 && x <= 50 => 0
-      case x if x > 50 && x <= 100 => 0
-      case x if x > 100 && x <= 150 => 1
-      case x if x > 150 && x <= 200 => 1
-      case x if x > 200 => 1
+      case x if x <= 127 => 0
       case _ => 1
     }
   }
