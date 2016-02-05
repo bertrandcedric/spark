@@ -1,5 +1,5 @@
 import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS
-import org.apache.spark.mllib.linalg.DenseVector
+import org.apache.spark.mllib.linalg.{Vector, DenseVector}
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -66,10 +66,18 @@ object SparkRandomForest {
 
     val checkLabel = transformedCopieData.map { point =>
       val prediction = model.predict(point.features)
-      (point.label, prediction)
+      (point.label, prediction, point.features)
     }
 
-    checkLabel.collect().filter(x => x._1 != x._2).groupBy(l => l).map(t => (t._1, t._2.length)).foreach(println)
+    checkLabel.collect().take(10).filter(x => x._1 != x._2).groupBy(l => (l._1, l._2)).map(t => (t._1, t._2.length, t._2)).foreach{
+      t => {
+        println("(label , prediction) => " + t._1)
+        println("Nombre de prediction fausse => " + t._2)
+        t._3.foreach{
+          x => analyse.display(x._3.toArray.map(d => d.toInt).mkString(","))
+        }
+      }
+    }
 
     val testErr = checkLabel.filter(r => r._1 != r._2).count.toDouble / checkData.count()
     println("Test Error = " + testErr)

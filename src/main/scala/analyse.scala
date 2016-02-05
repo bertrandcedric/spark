@@ -1,3 +1,5 @@
+import org.apache.commons.lang.math.IntRange
+
 import scala.io.Source
 
 /**
@@ -10,30 +12,25 @@ object analyse extends App {
   def display(line: String): Unit = {
 
     val work: Array[String] = line.split(",").map(p => {
-
       val range = computeTypeWriter(line)
-
       p match {
-        case x if range.contains(x) => "*"
-        case _ => "0"
+        case "0" => "0"
+        case x if range.contains(x.toInt) => "*"
+        case x if !range.contains(x.toInt) => "-" +
+          "" +
+          ""
       }
     })
-    work.grouped(28).foreach{line =>
+    work.grouped(28).foreach{l =>
       println
-      line.foreach(print)
+      l.foreach(print)
     }
+    println
   }
 
   def computeTypeWriter(line:String): Range ={
-
-    val work: Array[Int] = line.split(",").filter(i => i !=0 ).map(p => p.toInt)
-
-    val mean = work.sum / work.size
-
-    Range(mean + 10,mean-10)
-
-
+    val work: Array[Int] = line.split(",").filter(i => i != "0" ).map(p => p.toInt)
+    val mean: Int = work.sum / work.size
+    Range(mean - 50, mean + 50)
   }
-
-
 }
