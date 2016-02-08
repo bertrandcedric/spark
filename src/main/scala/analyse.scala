@@ -5,20 +5,17 @@ import scala.io.Source
 /**
   * Created by fsznajderman on 04/02/2016.
   */
-object analyse extends App {
+object analyse  {
 
-  Source.fromFile("data/test.csv").getLines().take(1).foreach(display)
+
 
   def display(line: String): Unit = {
-
+    val range = computeTypeWriter(line)
     val work: Array[String] = line.split(",").map(p => {
-      val range = computeTypeWriter(line)
       p match {
         case "0" => "0"
         case x if range.contains(x.toInt) => "*"
-        case x if !range.contains(x.toInt) => "-" +
-          "" +
-          ""
+        case x if !range.contains(x.toInt) => "-"
       }
     })
     work.grouped(28).foreach{l =>

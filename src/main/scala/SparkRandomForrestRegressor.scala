@@ -7,7 +7,7 @@ import org.apache.spark.mllib.util.MLUtils
 
 object SparkRandomForrestRegressor {
 
-  def main(args: Array[String]): Unit = {
+
     println("########## Init context Spark")
     val sc: SparkContext = new SparkContext(new SparkConf().setAppName("test").setMaster("local"))
 
@@ -39,6 +39,6 @@ object SparkRandomForrestRegressor {
     val testErr: Double = labelAndPreds.filter(r => r._1 != r._2).count.toDouble / testData.count()
     println("########## Test Error = " + testErr)
     println("########## Learned classification forest model:\n" + model.toDebugString)
-  }
+
 
 }

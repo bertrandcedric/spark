@@ -3,7 +3,7 @@ import org.apache.spark.mllib.regression.LabeledPoint
 
 import scala.io.Source
 
-val checkData = Source.fromFile("C:\\workspace\\spark\\data\\train.csv").getLines().take(1)
+val checkData = Source.fromFile("C:\\dev\\perso\\spark\\data\\train.csv").getLines().take(1)
 val transformedCopieData = checkData.map(d => {
   val l = d.replaceAll(";", ",").split(",")
   LabeledPoint(l.head.toInt, new DenseVector(l.tail.map(s => s.toDouble)))

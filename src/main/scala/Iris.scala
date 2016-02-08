@@ -9,8 +9,8 @@ import scala.util.Random
  0.0 < petalWidth < 2.5
  */
 object KNNScala {
-  def main(args: Array[String]) {
-    val dataset = loadDataset("src/main/resources/data/iris.data.csv")
+
+   val dataset = loadDataset("src/main/resources/data/iris.data.csv")
 
     val k = 5
     val features = (5.7, 2.6, 3.5, 1d)
@@ -19,7 +19,7 @@ object KNNScala {
 
     // try different values of k and see how prediction errors change
     evaluate(dataset)
-  }
+
 
   def predictSpecie(dataset: List[Iris], k: Int, features: (Double, Double, Double, Double)) = {
     dataset
@@ -59,4 +59,5 @@ object KNNScala {
       println(testData.filter(iris => iris.getSpecie != predictSpecie(learningData, k, iris.getFeatures)).length + " errors on " + testData.length + " tests with k=" + k);
     }
   }
+
 }

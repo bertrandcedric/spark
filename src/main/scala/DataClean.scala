@@ -3,7 +3,7 @@ import scala.io.Source
 /**
   * Created by fs24818n on 03/02/2016.
   */
-object DataClean extends App {
+object DataClean  {
 
 
   val train: Iterator[String] = Source.fromFile("data/train.csv").getLines()

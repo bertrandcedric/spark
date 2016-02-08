@@ -5,7 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 case class Person(rating: String, income: Double, age: Int)
 
 // http://www.cakesolutions.net/teamblogs/spark-mllib-linear-regression-example-and-vocabulary
-object SparkPeople extends App {
+object SparkPeople{
 
   def prepareFeatures(people: Seq[Person]): Seq[org.apache.spark.mllib.linalg.Vector] = {
     val maxIncome = people map(_ income) max
@@ -21,7 +21,7 @@ object SparkPeople extends App {
   def prepareFeaturesWithLabels(features: Seq[org.apache.spark.mllib.linalg.Vector]): Seq[LabeledPoint] =
     (0d to 1 by (1d / features.length)) zip(features) map(l => LabeledPoint(l._1, l._2))
 
-  override def main(args: Array[String]): Unit = {
+
     val people = List(
       Person("C", 1000, 50),
       Person("C", 1000, 55),
@@ -89,5 +89,5 @@ object SparkPeople extends App {
     println(s"Test RMSE = $rmse.")
 
     sc.stop()
-  }
+
 }
