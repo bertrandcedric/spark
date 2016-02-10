@@ -1,5 +1,5 @@
 import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS
-import org.apache.spark.mllib.linalg.{Vector, DenseVector}
+import org.apache.spark.mllib.linalg.DenseVector
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -11,6 +11,7 @@ object SparkRandomForest extends App {
       case x => x / max
     }
   }
+
 
 
   // Init spark context
