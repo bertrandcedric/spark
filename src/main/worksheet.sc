@@ -19,7 +19,7 @@ result.take(10).filter(x => x._1 != x._2).groupBy(l => (l._1, l._2)).map(t => (t
     println("Nombre de prediction fausse => " + t._2)
     t._3.foreach{
       x => {
-        analyse.display(x._3.toArray.map(d => d.toInt).mkString(","))
+        tools.display(x._3.toArray.map(d => d.toInt).mkString(","))
       }
     }
   }

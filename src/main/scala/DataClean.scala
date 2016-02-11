@@ -1,3 +1,5 @@
+import org.apache.spark.mllib.linalg.{Matrix, Matrices}
+
 import scala.io.Source
 
 /**
@@ -6,17 +8,15 @@ import scala.io.Source
 object DataClean  {
 
 
-  val train: Iterator[String] = Source.fromFile("data/train.csv").getLines()
-  val all = train.flatMap(f => f.split(",").map(d => d.toInt).filter(e => e != 0)).toSeq
+  // Create a dense matrix ((1.0, 2.0), (3.0, 4.0), (5.0, 6.0))
+  val dm = Seq(Matrices.dense(3, 2, Array(0.0, 0.0, 0.0, 0.0, 0.0, 6.0)),Matrices.dense(3, 2, Array(0.0, 2.0, 3.0, 0.0, 0.0, 6.0)),Matrices.dense(3, 2, Array(0.0, 0.0, 0.0, 0.0, 0.0, 6.0)))
 
-  //println(all.sum)
-
-
-
-  println(all.sum / all.size)
+  dm.groupBy(d => d.numNonzeros).foreach(el => println(el._1  + "," + el._2.size))
 
 
-  //println(all.sum / all.size)
+
+
+
 
 
 }

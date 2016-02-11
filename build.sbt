@@ -1,4 +1,4 @@
-javaOptions in run += "-Xmx8192M"
+javaOptions in run += "-Xmx8192M -XX:MaxPermSize=256M"
 
 scalaVersion := "2.11.7"
 
