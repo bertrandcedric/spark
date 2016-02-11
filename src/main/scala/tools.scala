@@ -1,4 +1,8 @@
-import org.apache.spark.mllib.linalg.{Matrix, Matrices}
+import java.io.{File, PrintWriter}
+
+import org.apache.spark.SparkContext
+import org.apache.spark.mllib.classification._
+import org.apache.spark.mllib.linalg.{DenseVector, Matrix, Matrices}
 import org.apache.spark.rdd.RDD
 
 
@@ -10,6 +14,7 @@ object tools {
 
   /**
     * Format line as matrix
+    *
     * @param line
     */
   def display(line: String): Unit = {
@@ -30,6 +35,7 @@ object tools {
 
   /**
     * try to manage the manner that writer write the numer (strong or not)
+    *
     * @param line
     * @return
     */
@@ -41,6 +47,7 @@ object tools {
 
   /**
     * transform pixel value into value from 0 to 1
+    *
     * @param d
     * @param max
     * @return
@@ -54,6 +61,7 @@ object tools {
 
   /**
     * Initiale transformation
+    *
     * @param rdd
     * @return
     */
@@ -74,6 +82,26 @@ object tools {
     r.filter(t => t._2.numNonzeros > 10).map(r => r._1)
     // Test Error = 0.06880733944954129 -> 50
 
+  }
+
+  def submit(sc:SparkContext, model:LogisticRegressionModel): Unit ={
+    val testData = sc.textFile("data/test.csv")
+    val test = t(testData).map(d => {
+      val max = d.max
+      val l = d.map(s => mapTo1(s, max))
+      new DenseVector(l)
+    })
+
+    val prediction = test.map { point =>
+      model.predict(point)
+    }
+
+    val writer = new PrintWriter(new File("data/results.csv"))
+    writer.write("ImageId,Label" + "\n")
+    prediction.collect().zipWithIndex foreach {
+      case (l, i) => writer.write((i + 1) + "," + l.toInt + "\n")
+    }
+    writer.close()
   }
 
 }
