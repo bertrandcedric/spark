@@ -3,8 +3,11 @@ import java.io.{File, PrintWriter}
 import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS
 import org.apache.spark.mllib.linalg.DenseVector
 import org.apache.spark.mllib.regression.LabeledPoint
+import org.apache.spark.mllib.tree.{RandomForest, DecisionTree}
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 import tools._
+import run._
 
 object SparkRandomForest extends App {
 
@@ -24,36 +27,11 @@ object SparkRandomForest extends App {
   val (trainingData, checkData) = (splits(0), splits(1))
 
 
+  //val model = trainClassifier(trainingData)
 
-  //    val numClasses = 10
-  //    val categoricalFeaturesInfo = Map[Int, Int]()
-  //    val impurity = "gini"
-  //    val maxDepth = 5
-  //    val maxBins = 100
-  //    val model = DecisionTree.trainClassifier(train, numClasses, categoricalFeaturesInfo,
-  //      impurity, maxDepth, maxBins)
+  //val model = randomForest((trainingData))
 
-  //    val numClasses = 10
-  //    val categoricalFeaturesInfo = Map[Int, Int]()
-  //    val numTrees = 30 // Use more in practice.
-  //    val featureSubsetStrategy = "auto" // Let the algorithm choose.
-  //    val impurity = "gini"
-  //    val maxDepth = 7
-  //    val maxBins = 100
-  //    val model = RandomForest.trainClassifier(
-  //      train,
-  //      numClasses,
-  //      categoricalFeaturesInfo,
-  //      numTrees,
-  //      featureSubsetStrategy,
-  //      impurity,
-  //      maxDepth,
-  //      maxBins,
-  //      0)
-
-  val model = new LogisticRegressionWithLBFGS()
-    .setNumClasses(10)
-    .run(trainingData)
+  val model = logisticRegressionWithLBFGS(trainingData)
 
   // Verification des labels avec un sous ensemble de données
   val checkLabel = checkData.map { point =>
@@ -93,4 +71,7 @@ object SparkRandomForest extends App {
   }
   writer.close()
 */
+
+
+
 }
