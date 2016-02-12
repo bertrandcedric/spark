@@ -1,10 +1,13 @@
 import java.io.{File, PrintWriter}
 
+import org.apache.commons.lang.math.DoubleRange
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.classification._
 import org.apache.spark.mllib.linalg.{DenseVector, Matrix, Matrices}
 import org.apache.spark.rdd.RDD
 
+import scala.collection.immutable.NumericRange
+import scala.collection.immutable.Range.Partial
 
 
 /**
@@ -17,13 +20,13 @@ object tools {
     *
     * @param line
     */
-  def display(line: String): Unit = {
-    val range = computeTypeWriter(line)
-    val work: Array[String] = line.split(",").map(p => {
+  def display(line: Array[Double]): Unit = {
+    val mean = computeTypeWriter(line)
+    val work = line.map(p => {
       p match {
-        case "0.0" => "0"
-        case x if range.contains(x) => "*"
-        case x if !range.contains(x) => "-"
+        case 0.0 => "0"
+        case x if x < mean => "-"
+        case _ => "*"
       }
     })
     work.grouped(28).foreach { l =>
@@ -39,10 +42,10 @@ object tools {
     * @param line
     * @return
     */
-  def computeTypeWriter(line: String): Range = {
-    val work: Array[Double] = line.split(",").filter(i => i != "0.0").map(p => p.toDouble)
-    val mean = (work.sum / work.size.toDouble).toInt
-    Range(mean - 50, mean + 50)
+  def computeTypeWriter(line: Array[Double]): Double = {
+    val work = line.filter(i => i != 0.0)
+    (work.sum / work.size.toDouble)
+
   }
 
   /**
@@ -66,7 +69,7 @@ object tools {
     * @return
     */
   def t(rdd: RDD[String]): RDD[Array[Double]] = {
-    rdd.map(l => l.replaceAll(";",",").split(",").map(i => i.toDouble))
+    rdd.map(l => l.replaceAll(";", ",").split(",").map(i => i.toDouble))
   }
 
   def filterDigitwithNotEnoughtAccuracy(rdd: RDD[String]): RDD[Array[Double]] = {
@@ -79,12 +82,11 @@ object tools {
       r._2.numNonzeros
     }).foreach(el => println(el._1 + "," + el._2.size))
 
-    r.filter(t => t._2.numNonzeros > 10).map(r => r._1)
-    // Test Error = 0.06880733944954129 -> 50
+    r.map(r => r._1)
 
   }
 
-  def submit(sc:SparkContext, model:LogisticRegressionModel): Unit ={
+  def submit(sc: SparkContext, model: LogisticRegressionModel): Unit = {
     val testData = sc.textFile("data/test.csv")
     val test = t(testData).map(d => {
       val max = d.max

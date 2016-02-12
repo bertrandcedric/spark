@@ -44,7 +44,7 @@ object SparkRandomForest extends App {
       println("(label , prediction) => " + t._1)
       println("Nombre de prediction fausse => " + t._2)
       t._3.foreach {
-        x => display(x._3.toArray.mkString(","))
+        x => display(x._3.toArray)
       }
     }
   }
