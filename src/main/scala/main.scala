@@ -1,15 +1,11 @@
-import java.io.{File, PrintWriter}
-
-import org.apache.spark.mllib.classification.LogisticRegressionWithLBFGS
+import org.apache.spark.mllib.classification.LogisticRegressionModel
 import org.apache.spark.mllib.linalg.DenseVector
 import org.apache.spark.mllib.regression.LabeledPoint
-import org.apache.spark.mllib.tree.{RandomForest, DecisionTree}
-import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
-import tools._
 import run._
+import tools._
 
-object SparkRandomForest extends App {
+object main extends App {
 
 
   // Init spark context
@@ -19,7 +15,7 @@ object SparkRandomForest extends App {
   //load train data
 
   val splits = t(sc.textFile("data/train.csv")).map(l => {
-    val max = l.max
+    val max = refineMatrix(l).max
     LabeledPoint(l.head.toInt, new DenseVector(l.tail.map(s => mapTo1(s.toInt, max))))
   }).randomSplit(Array(0.98, 0.02))
 
@@ -31,7 +27,11 @@ object SparkRandomForest extends App {
 
   //val model = randomForest((trainingData))
 
-  val model = logisticRegressionWithLBFGS(trainingData)
+  val model: LogisticRegressionModel = logisticRegressionWithLBFGS(trainingData)
+
+
+  println("model :   " )
+  println(model.toPMML())
 
   // Verification des labels avec un sous ensemble de données
   val checkLabel = checkData.map { point =>
