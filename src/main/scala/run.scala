@@ -40,8 +40,9 @@ object run {
   }
 
   def logisticRegressionWithLBFGS(train: RDD[LabeledPoint]) = {
-    new LogisticRegressionWithLBFGS()
+   new LogisticRegressionWithLBFGS()
       .setNumClasses(10)
       .run(train)
+
   }
 }

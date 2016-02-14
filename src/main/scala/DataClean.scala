@@ -1,21 +1,25 @@
-import org.apache.spark.mllib.linalg.{Matrix, Matrices}
-
-import scala.io.Source
+import org.apache.spark.{SparkConf, SparkContext}
 
 /**
   * Created by fs24818n on 03/02/2016.
   */
-object DataClean  {
+object DataClean extends App {
 
+  // Init spark context
+  val conf = new SparkConf().setAppName("test").setMaster("local[*]")
+  val sc = new SparkContext(conf)
 
-  // Create a dense matrix ((1.0, 2.0), (3.0, 4.0), (5.0, 6.0))
-  val dm = Seq(Matrices.dense(3, 2, Array(0.0, 0.0, 0.0, 0.0, 0.0, 6.0)),Matrices.dense(3, 2, Array(0.0, 2.0, 3.0, 0.0, 0.0, 6.0)),Matrices.dense(3, 2, Array(0.0, 0.0, 0.0, 0.0, 0.0, 6.0)))
+  val sqlContext = new org.apache.spark.sql.SQLContext(sc)
 
-  dm.groupBy(d => d.numNonzeros).foreach(el => println(el._1  + "," + el._2.size))
+  val df = sqlContext.read
+    .format("com.databricks.spark.csv")
+    .option("header", "false") // Use first line of all files as header
+    .option("inferSchema", "true") // Automatically infer data types
+    .load("data/train.csv")
 
+  //df.columns.foreach(println)
 
-
-
+  df.col("C1")
 
 
 

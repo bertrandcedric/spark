@@ -1,19 +1,29 @@
 import java.io.{File, PrintWriter}
 
-import org.apache.commons.lang.math.DoubleRange
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.classification._
-import org.apache.spark.mllib.linalg.{DenseVector, Matrix, Matrices}
+import org.apache.spark.mllib.linalg.{DenseVector, Matrices, Matrix}
 import org.apache.spark.rdd.RDD
-
-import scala.collection.immutable.NumericRange
-import scala.collection.immutable.Range.Partial
 
 
 /**
   * Created by fsznajderman on 04/02/2016.
   */
 object tools {
+
+
+
+  def refineMatrix(line: Array[Double]):Array[Double] = {
+    val mean = computeTypeWriter(line)
+    line.map(p => {
+      p match {
+        case x if x < (mean) => 0.0
+        case _ => p
+      }
+    })
+
+  }
+
 
   /**
     * Format line as matrix
@@ -25,15 +35,18 @@ object tools {
     val work = line.map(p => {
       p match {
         case 0.0 => "0"
-        case x if x < mean => "-"
+        case x if x < mean => "0"
         case _ => "*"
       }
     })
     work.grouped(28).foreach { l =>
       println
-      l.foreach(print)
+      if(l.filter{ p => p!="0"}.length >0 ) {
+        l.foreach(print)
+      }
     }
     println
+
   }
 
   /**

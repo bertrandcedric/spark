@@ -1,4 +1,3 @@
-import org.apache.spark.mllib.classification.LogisticRegressionModel
 import org.apache.spark.mllib.linalg.DenseVector
 import org.apache.spark.mllib.regression.LabeledPoint
 import org.apache.spark.{SparkConf, SparkContext}
@@ -8,9 +7,13 @@ import tools._
 object main extends App {
 
 
+
+  // this is used to implicitly convert an RDD to a DataFrame.
+
   // Init spark context
   val conf = new SparkConf().setAppName("test").setMaster("local[*]")
   val sc = new SparkContext(conf)
+
 
   //load train data
 
@@ -27,11 +30,10 @@ object main extends App {
 
   //val model = randomForest((trainingData))
 
-  val model: LogisticRegressionModel = logisticRegressionWithLBFGS(trainingData)
+  val model= logisticRegressionWithLBFGS(trainingData)
 
 
-  println("model :   " )
-  println(model.toPMML())
+
 
   // Verification des labels avec un sous ensemble de données
   val checkLabel = checkData.map { point =>
@@ -52,7 +54,7 @@ object main extends App {
   val testErr = checkLabel.filter(r => r._1 != r._2).count.toDouble / checkData.count()
   println("Test Error = " + testErr)
 
-  /*// Prediction avec le jeu de test
+/*// Prediction avec le jeu de test
   val testData = sc.textFile("data/test.csv")
   val test = t(testData).map(d => {
     val max = d.max
