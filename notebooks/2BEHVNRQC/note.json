@@ -191,7 +191,7 @@
     },
     {
       "text": "%sql \nselect age, count(1) value \nfrom bank \nwhere marital\u003d\"${marital\u003dsingle,single|divorced|married}\" \ngroup by age \norder by age",
-      "dateUpdated": "Feb 19, 2016 2:21:38 PM",
+      "dateUpdated": "Feb 19, 2016 2:54:15 PM",
       "config": {
         "colWidth": 4.0,
         "editorMode": "ace/mode/sql",
@@ -362,23 +362,7 @@
   ],
   "name": "Zeppelin Tutorial",
   "id": "2BEHVNRQC",
-  "angularObjects": {
-    "2BCSBAKHJ": [],
-    "2BCY326GK": [],
-    "2BEWC3M2V": [],
-    "2BDUX9G5H": [],
-    "2BEPZTSFY": [],
-    "2BE5QJRCR": [],
-    "2BD1JHHBD": [],
-    "2BBUHD36G": [],
-    "2BEW2685J": [],
-    "2BD29H49P": [],
-    "2BCSGCDJE": [],
-    "2BEE8URH2": [],
-    "2BC3F4VNA": [],
-    "2BCXWMXXU": [],
-    "2BD2EQRJJ": []
-  },
+  "angularObjects": {},
   "config": {},
   "info": {}
 }

@@ -2,7 +2,7 @@
   "paragraphs": [
     {
       "text": "%dep\nz.reset()\nz.addRepo(\"Spark Packages Repo\").url(\"http://dl.bintray.com/spark-packages/maven\")\nz.load(\"com.databricks:spark-csv_2.11:1.3.0\")",
-      "dateUpdated": "Feb 19, 2016 2:21:52 PM",
+      "dateUpdated": "Feb 19, 2016 2:50:29 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -15,7 +15,8 @@
           "groups": [],
           "scatter": {}
         },
-        "enabled": true
+        "enabled": false,
+        "tableHide": true
       },
       "settings": {
         "params": {},
@@ -26,16 +27,17 @@
       "result": {
         "code": "ERROR",
         "type": "TEXT",
-        "msg": "Must be used before SparkInterpreter (%spark) initialized\nHint: put this paragraph before any Spark code and restart Zeppelin/Interpreter"
+        "msg": "java.lang.NullPointerException\n\tat org.sonatype.aether.impl.internal.DefaultRepositorySystem.resolveDependencies(DefaultRepositorySystem.java:352)\n\tat org.apache.zeppelin.spark.dep.SparkDependencyContext.fetchArtifactWithDep(SparkDependencyContext.java:171)\n\tat org.apache.zeppelin.spark.dep.SparkDependencyContext.fetch(SparkDependencyContext.java:121)\n\tat org.apache.zeppelin.spark.DepInterpreter.interpret(DepInterpreter.java:220)\n\tat org.apache.zeppelin.interpreter.ClassloaderInterpreter.interpret(ClassloaderInterpreter.java:57)\n\tat org.apache.zeppelin.interpreter.LazyOpenInterpreter.interpret(LazyOpenInterpreter.java:93)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterServer$InterpretJob.jobRun(RemoteInterpreterServer.java:295)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:171)\n\tat org.apache.zeppelin.scheduler.FIFOScheduler$1.run(FIFOScheduler.java:139)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)\n\tat java.lang.Thread.run(Thread.java:745)\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
-      "status": "READY",
-      "errorMessage": "",
+      "dateStarted": "Feb 19, 2016 2:43:16 PM",
+      "dateFinished": "Feb 19, 2016 2:49:47 PM",
+      "status": "ERROR",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "val df \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"src/main/resources/data/home_data.csv\").cache()\n\ndf.printSchema()\n\nval zipcode \u003d df.select(\"price\", \"zipcode\").groupBy(\"zipcode\").mean(\"price\").sort(desc(\"avg(price)\")).show()\n",
-      "dateUpdated": "Feb 19, 2016 2:22:57 PM",
+      "text": "val df \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"src/main/resources/data/home_data.csv\").cache()\n\ndf.printSchema()\n\nval zipcode \u003d df.select(\"price\", \"zipcode\").groupBy(\"zipcode\").mean(\"price\").sort(desc(\"avg(price)\")).show()",
+      "dateUpdated": "Feb 19, 2016 2:48:00 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -48,7 +50,7 @@
           "groups": [],
           "scatter": {}
         },
-        "enabled": true,
+        "enabled": false,
         "editorHide": false,
         "tableHide": true
       },
@@ -69,8 +71,8 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "import org.apache.commons.io.IOUtils\nimport java.io.File\nimport java.nio.charset.Charset\n\nval bankText \u003d sc.textFile(\"/zeppelin/notebook/people-example.csv\")\n\ncase class People(firstname: String, lastname: String, country: String, age: Integer)\n\nval bank \u003d bankText.map(s \u003d\u003e s.split(\",\")).map(\n    s \u003d\u003e People(s(0), s(1), s(2), s(3).toInt)\n).toDF()\n\nbank.registerTempTable(\"bank\")\n",
-      "dateUpdated": "Feb 19, 2016 2:23:33 PM",
+      "text": "import org.apache.commons.io.IOUtils\nimport java.io.File\nimport java.nio.charset.Charset\n\nval people \u003d sc.textFile(\"/zeppelin/notebook/people-example.csv\")\n\ncase class People(firstname: String, lastname: String, country: String, age: Integer)\n\nval peopleDF \u003d people.map(s \u003d\u003e s.split(\",\")).map(\n    s \u003d\u003e People(s(0), s(1), s(2), s(3).toInt)\n).toDF()\n\npeopleDF.registerTempTable(\"people\")\n",
+      "dateUpdated": "Feb 19, 2016 2:50:40 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -94,19 +96,19 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "import org.apache.commons.io.IOUtils\nimport java.io.File\nimport java.nio.charset.Charset\nbankText: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[20] at textFile at \u003cconsole\u003e:41\ndefined class People\nbank: org.apache.spark.sql.DataFrame \u003d [firstname: string, lastname: string, country: string, age: int]\n"
+        "msg": "import org.apache.commons.io.IOUtils\nimport java.io.File\nimport java.nio.charset.Charset\npeople: org.apache.spark.rdd.RDD[String] \u003d MapPartitionsRDD[11] at textFile at \u003cconsole\u003e:40\ndefined class People\npeopleDF: org.apache.spark.sql.DataFrame \u003d [firstname: string, lastname: string, country: string, age: int]\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
-      "dateStarted": "Feb 19, 2016 2:23:33 PM",
-      "dateFinished": "Feb 19, 2016 2:23:36 PM",
+      "dateStarted": "Feb 19, 2016 2:50:40 PM",
+      "dateFinished": "Feb 19, 2016 2:50:42 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "%sql \nselect *\nfrom bank ",
-      "dateUpdated": "Feb 19, 2016 2:23:38 PM",
+      "text": "%sql \nselect *\nfrom people ",
+      "dateUpdated": "Feb 19, 2016 2:56:27 PM",
       "config": {
-        "colWidth": 12.0,
+        "colWidth": 6.0,
         "editorMode": "ace/mode/sql",
         "graph": {
           "mode": "pieChart",
@@ -116,16 +118,14 @@
             {
               "name": "country",
               "index": 2.0,
-              "aggr": "sum",
-              "$$hashKey": "object:2821"
+              "aggr": "sum"
             }
           ],
           "values": [
             {
               "name": "country",
               "index": 2.0,
-              "aggr": "count",
-              "$$hashKey": "object:2823"
+              "aggr": "count"
             }
           ],
           "groups": [],
@@ -156,24 +156,48 @@
         "msg": "firstname\tlastname\tcountry\tage\n\"Bob\"\t\"Smith\"\t\"United States\"\t24\n\"Alice\"\t\"Williams\"\t\"Canada\"\t23\n\"Malcolm\"\t\"Jone\"\t\"England\"\t22\n\"Felix\"\t\"Brown\"\t\"USA\"\t23\n\"Alex\"\t\"Cooper\"\t\"Poland\"\t23\n\"Tod\"\t\"Campbell\"\t\"United States\"\t22\n\"Derek\"\t\"Ward\"\t\"Switzerland\"\t25\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
-      "dateStarted": "Feb 19, 2016 2:23:38 PM",
-      "dateFinished": "Feb 19, 2016 2:23:39 PM",
+      "dateStarted": "Feb 19, 2016 2:50:45 PM",
+      "dateFinished": "Feb 19, 2016 2:50:45 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
-      "dateUpdated": "Feb 19, 2016 2:21:52 PM",
+      "text": "%sql \nselect country, count(1) value\nfrom people\ngroup by country",
+      "dateUpdated": "Feb 19, 2016 2:56:26 PM",
       "config": {
-        "colWidth": 12.0,
-        "editorMode": "ace/mode/scala",
+        "colWidth": 6.0,
+        "editorMode": "ace/mode/sql",
         "graph": {
-          "mode": "table",
+          "mode": "pieChart",
           "height": 300.0,
-          "optionOpen": false,
-          "keys": [],
-          "values": [],
+          "optionOpen": true,
+          "keys": [
+            {
+              "name": "country",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "value",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
           "groups": [],
-          "scatter": {}
+          "scatter": {
+            "xAxis": {
+              "name": "country",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "value",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
         },
         "enabled": true
       },
@@ -185,33 +209,46 @@
       "id": "20160219-142152_43120593",
       "result": {
         "code": "SUCCESS",
-        "type": "TEXT",
-        "msg": ""
+        "type": "TABLE",
+        "msg": "country\tvalue\n\"Poland\"\t1\n\"Canada\"\t1\n\"USA\"\t1\n\"United States\"\t2\n\"Switzerland\"\t1\n\"England\"\t1\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
+      "dateStarted": "Feb 19, 2016 2:54:37 PM",
+      "dateFinished": "Feb 19, 2016 2:54:39 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1455893497133_-91254147",
+      "id": "20160219-145137_221335422",
+      "dateCreated": "Feb 19, 2016 2:51:37 PM",
       "status": "READY",
-      "errorMessage": "",
       "progressUpdateIntervalMs": 500
     }
   ],
   "name": "Getting started Zeppelin",
   "id": "2BDPCUE6N",
   "angularObjects": {
-    "2BCSBAKHJ": [],
-    "2BCY326GK": [],
-    "2BEWC3M2V": [],
-    "2BDUX9G5H": [],
-    "2BEPZTSFY": [],
-    "2BE5QJRCR": [],
-    "2BD1JHHBD": [],
-    "2BBUHD36G": [],
-    "2BEW2685J": [],
-    "2BD29H49P": [],
-    "2BCSGCDJE": [],
-    "2BEE8URH2": [],
-    "2BC3F4VNA": [],
-    "2BCXWMXXU": [],
-    "2BD2EQRJJ": []
+    "2BCZT9VC3": [],
+    "2BE2RQP88": [],
+    "2BBD4M2XD": [],
+    "2BENGUR95": [],
+    "2BCM94ZAD": [],
+    "2BE1928JB": [],
+    "2BD85SRCN": [],
+    "2BDAUBWDB": [],
+    "2BCBDQAAA": [],
+    "2BB9CPNJF": [],
+    "2BB16XMSW": [],
+    "2BEBXNMJM": [],
+    "2BCX1SST3": [],
+    "2BEWSNJJU": [],
+    "2BDX38JZT": []
   },
   "config": {},
   "info": {}
