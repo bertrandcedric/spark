@@ -18,14 +18,15 @@ sudo mount -t vboxsf zeppelin_notebooks /zeppelin_notebooks
 
 ### Image Jupyter
 ```
-docker run -d -p 8888:8888 --name=jupyter -v /jupyter_notebooks:/jupyter_notebooks jupyter/notebook
+docker run -d -p 8888:8888 --name=jupyter -v ${PATH_TO_JUPYTER_NOTEBOOKS_DIRECTORY}:/jupyter_notebooks jupyter/notebook
+
 http://{{ip machine docker}}:8888/tree
 ```
 
 ### Image zeppelin
 ```
-docker run --name zeppelin -d -p 8080:8080 -p 8081:8081 -v /zeppelin_notebooks:/zeppelin_notebooks dylanmei/zeppelin:latest
- 
+docker run --name zeppelin -d -p 8080:8080 -p 8081:8081 -v ${PATH_TO_ZEPPELIN_NOTEBOOKS_DIRECTORY}:/zeppelin/notebook dylanmei/zeppelin:latest
+
 http://{{ip machine docker}}:8080
 ```
 
