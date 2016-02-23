@@ -38,7 +38,7 @@
     },
     {
       "text": "%dep\nz.reset()\nz.addRepo(\"Spark Packages Repo\").url(\"http://nexus.integration.linky.distribution.edf.fr/content/groups/public/\")\nz.load(\"com.databricks:spark-csv_2.11:1.3.0\")",
-      "dateUpdated": "Feb 23, 2016 12:42:23 PM",
+      "dateUpdated": "Feb 23, 2016 12:47:09 PM",
       "config": {
         "colWidth": 12.0,
         "graph": {
@@ -60,19 +60,19 @@
       "jobName": "paragraph_1456160810676_1738259504",
       "id": "20160222-170650_452343838",
       "result": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "Must be used before SparkInterpreter (%spark) initialized\nHint: put this paragraph before any Spark code and restart Zeppelin/Interpreter"
+        "msg": "res0: org.apache.zeppelin.dep.Dependency \u003d org.apache.zeppelin.dep.Dependency@8218f1a\n"
       },
       "dateCreated": "Feb 22, 2016 5:06:50 PM",
-      "dateStarted": "Feb 23, 2016 12:41:09 PM",
-      "dateFinished": "Feb 23, 2016 12:41:09 PM",
-      "status": "ERROR",
+      "dateStarted": "Feb 23, 2016 12:47:10 PM",
+      "dateFinished": "Feb 23, 2016 12:47:19 PM",
+      "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "val df \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"/zeppelin/notebook/people-example.csv\").cache()\n\ndf.printSchema()\n\ndf.rdd\n\ndf.registerTempTable(\"people\")\n\ndf.select(\"firstname\").show()\n",
-      "dateUpdated": "Feb 23, 2016 12:41:13 PM",
+      "dateUpdated": "Feb 23, 2016 12:47:22 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -98,17 +98,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "df: org.apache.spark.sql.DataFrame \u003d [firstname: string, lastname: string, country: string, age: int]\nroot\n |-- firstname: string (nullable \u003d true)\n |-- lastname: string (nullable \u003d true)\n |-- country: string (nullable \u003d true)\n |-- age: integer (nullable \u003d true)\n\nres84: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] \u003d MapPartitionsRDD[164] at rdd at \u003cconsole\u003e:38\n+---------+\n|firstname|\n+---------+\n|      Bob|\n|    Alice|\n|  Malcolm|\n|    Felix|\n|     Alex|\n|      Tod|\n|    Derek|\n+---------+\n\n"
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [Firstname: string, Lastname: string, Country: string, Age: int]\nroot\n |-- Firstname: string (nullable \u003d true)\n |-- Lastname: string (nullable \u003d true)\n |-- Country: string (nullable \u003d true)\n |-- Age: integer (nullable \u003d true)\n\nres3: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] \u003d MapPartitionsRDD[13] at rdd at \u003cconsole\u003e:31\n+---------+\n|firstname|\n+---------+\n|      Bob|\n|    Alice|\n|  Malcolm|\n|    Felix|\n|     Alex|\n|      Tod|\n|    Derek|\n+---------+\n\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
-      "dateStarted": "Feb 23, 2016 12:41:13 PM",
-      "dateFinished": "Feb 23, 2016 12:41:15 PM",
+      "dateStarted": "Feb 23, 2016 12:47:22 PM",
+      "dateFinished": "Feb 23, 2016 12:47:55 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql \nselect *\nfrom people\n",
-      "dateUpdated": "Feb 23, 2016 12:40:50 PM",
+      "dateUpdated": "Feb 23, 2016 12:48:56 PM",
       "config": {
         "colWidth": 6.0,
         "editorMode": "ace/mode/sql",
@@ -118,29 +118,29 @@
           "optionOpen": true,
           "keys": [
             {
-              "name": "country",
+              "name": "Country",
               "index": 2.0,
               "aggr": "sum",
-              "$$hashKey": "object:618"
+              "$$hashKey": "object:492"
             }
           ],
           "values": [
             {
-              "name": "country",
+              "name": "Country",
               "index": 2.0,
               "aggr": "count",
-              "$$hashKey": "object:620"
+              "$$hashKey": "object:494"
             }
           ],
           "groups": [],
           "scatter": {
             "xAxis": {
-              "name": "firstname",
+              "name": "Firstname",
               "index": 0.0,
               "aggr": "sum"
             },
             "yAxis": {
-              "name": "lastname",
+              "name": "Lastname",
               "index": 1.0,
               "aggr": "sum"
             }
@@ -157,17 +157,17 @@
       "result": {
         "code": "SUCCESS",
         "type": "TABLE",
-        "msg": "firstname\tlastname\tcountry\tage\nBob\tSmith\tUnited States\t24\nAlice\tWilliams\tCanada\t23\nMalcolm\tJone\tEngland\t22\nFelix\tBrown\tUSA\t23\nAlex\tCooper\tPoland\t23\nTod\tCampbell\tUnited States\t22\nDerek\tWard\tSwitzerland\t25\n"
+        "msg": "Firstname\tLastname\tCountry\tAge\nBob\tSmith\tUnited States\t24\nAlice\tWilliams\tCanada\t23\nMalcolm\tJone\tEngland\t22\nFelix\tBrown\tUSA\t23\nAlex\tCooper\tPoland\t23\nTod\tCampbell\tUnited States\t22\nDerek\tWard\tSwitzerland\t25\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
-      "dateStarted": "Feb 23, 2016 12:40:50 PM",
-      "dateFinished": "Feb 23, 2016 12:40:50 PM",
+      "dateStarted": "Feb 23, 2016 12:48:56 PM",
+      "dateFinished": "Feb 23, 2016 12:48:56 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
     {
       "text": "%sql \nselect country, count(1) value\nfrom people\ngroup by country",
-      "dateUpdated": "Feb 23, 2016 12:40:53 PM",
+      "dateUpdated": "Feb 23, 2016 12:47:37 PM",
       "config": {
         "colWidth": 6.0,
         "editorMode": "ace/mode/sql",
@@ -219,8 +219,8 @@
         "msg": "country\tvalue\nPoland\t1\nUnited States\t2\nCanada\t1\nEngland\t1\nUSA\t1\nSwitzerland\t1\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
-      "dateStarted": "Feb 23, 2016 12:40:53 PM",
-      "dateFinished": "Feb 23, 2016 12:40:55 PM",
+      "dateStarted": "Feb 23, 2016 12:47:56 PM",
+      "dateFinished": "Feb 23, 2016 12:48:00 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
@@ -240,21 +240,21 @@
   "name": "Getting started Zeppelin",
   "id": "2BDPCUE6N",
   "angularObjects": {
-    "2BCXNJNJA": [],
-    "2BBXK2B3H": [],
-    "2BDT22GBA": [],
-    "2BEUMEBCC": [],
-    "2BF41F437": [],
-    "2BDXSV819": [],
-    "2BDQH1KRC": [],
-    "2BDV7TT63": [],
-    "2BBHFZ836": [],
-    "2BC4KEHEU": [],
-    "2BCK384A5": [],
-    "2BE25GD9Q": [],
-    "2BBTS52AF": [],
-    "2BEC1ENJZ": [],
-    "2BDQM1D1Q": []
+    "2BBJERN1F": [],
+    "2BB8S8HNQ": [],
+    "2BBBUP71B": [],
+    "2BD4K1E36": [],
+    "2BD5CH248": [],
+    "2BBPM7U93": [],
+    "2BEKBKEAY": [],
+    "2BBCMSRYT": [],
+    "2BCNT3W6K": [],
+    "2BCFGSN2F": [],
+    "2BE1D3NMM": [],
+    "2BC8GHWYQ": [],
+    "2BCBKFT2E": [],
+    "2BD2ZNK6C": [],
+    "2BC8WAXBS": []
   },
   "config": {},
   "info": {}
