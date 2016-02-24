@@ -7,17 +7,14 @@
 docker-machine create --driver virtualbox --virtualbox-memory "4096" dev
 
 fichier de configuration du daemon docker => /var/lib/boot2docker/profile
-
-ajout d'un repertoire partagé dans virtualbox => test
-sudo mkdir /jupyter_notebooks
-sudo mount -t vboxsf jupyter_notebooks /jupyter_notebooks
-
-sudo mkdir /zeppelin_notebooks
-sudo mount -t vboxsf zeppelin_notebooks /zeppelin_notebooks
 ```
 
 ### Image Jupyter
 ```
+ajout d'un repertoire partagé dans virtualbox => test
+sudo mkdir /jupyter_notebooks
+sudo mount -t vboxsf jupyter_notebooks /jupyter_notebooks
+
 docker run -d -p 8888:8888 --name=jupyter -v ${PATH_TO_JUPYTER_NOTEBOOKS_DIRECTORY}:/jupyter_notebooks jupyter/notebook
 
 http://{{ip machine docker}}:8888/tree
@@ -25,6 +22,10 @@ http://{{ip machine docker}}:8888/tree
 
 ### Image zeppelin
 ```
+ajout d'un repertoire partagé dans virtualbox => test
+sudo mkdir /zeppelin_notebooks
+sudo mount -t vboxsf zeppelin_notebooks /zeppelin_notebooks
+
 docker run --name zeppelin -d -p 8080:8080 -p 8081:8081 -v ${PATH_TO_ZEPPELIN_NOTEBOOKS_DIRECTORY}:/zeppelin/notebook dylanmei/zeppelin:latest
 
 http://{{ip machine docker}}:8080
