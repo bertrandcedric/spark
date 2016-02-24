@@ -1,3 +1,7 @@
 /target
 /project
 /.idea
+
+notebooks/data/amazon_baby.csv
+notebooks/data/people_wiki.csv
+
