@@ -71,8 +71,8 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "val df \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"/zeppelin/notebook/people-example.csv\").cache()\n\ndf.printSchema()\n\ndf.rdd\n\ndf.registerTempTable(\"people\")\n\ndf.select(\"firstname\").show()\n",
-      "dateUpdated": "Feb 23, 2016 12:47:22 PM",
+      "text": "val df \u003d sqlContext.read.format(\"com.databricks.spark.csv\").option(\"header\", \"true\").option(\"inferSchema\", \"true\").load(\"/zeppelin/notebook/people-example.csv\").cache()\ndf.printSchema()\ndf.registerTempTable(\"people\")\ndf.select(\"firstname\").show()",
+      "dateUpdated": "Feb 23, 2016 12:55:20 PM",
       "config": {
         "colWidth": 12.0,
         "editorMode": "ace/mode/scala",
@@ -98,11 +98,11 @@
       "result": {
         "code": "SUCCESS",
         "type": "TEXT",
-        "msg": "df: org.apache.spark.sql.DataFrame \u003d [Firstname: string, Lastname: string, Country: string, Age: int]\nroot\n |-- Firstname: string (nullable \u003d true)\n |-- Lastname: string (nullable \u003d true)\n |-- Country: string (nullable \u003d true)\n |-- Age: integer (nullable \u003d true)\n\nres3: org.apache.spark.rdd.RDD[org.apache.spark.sql.Row] \u003d MapPartitionsRDD[13] at rdd at \u003cconsole\u003e:31\n+---------+\n|firstname|\n+---------+\n|      Bob|\n|    Alice|\n|  Malcolm|\n|    Felix|\n|     Alex|\n|      Tod|\n|    Derek|\n+---------+\n\n"
+        "msg": "df: org.apache.spark.sql.DataFrame \u003d [Firstname: string, Lastname: string, Country: string, Age: int]\nroot\n |-- Firstname: string (nullable \u003d true)\n |-- Lastname: string (nullable \u003d true)\n |-- Country: string (nullable \u003d true)\n |-- Age: integer (nullable \u003d true)\n\n+---------+\n|firstname|\n+---------+\n|      Bob|\n|    Alice|\n|  Malcolm|\n|    Felix|\n|     Alex|\n|      Tod|\n|    Derek|\n+---------+\n\n"
       },
       "dateCreated": "Feb 19, 2016 2:21:52 PM",
-      "dateStarted": "Feb 23, 2016 12:47:22 PM",
-      "dateFinished": "Feb 23, 2016 12:47:55 PM",
+      "dateStarted": "Feb 23, 2016 12:55:20 PM",
+      "dateFinished": "Feb 23, 2016 12:55:22 PM",
       "status": "FINISHED",
       "progressUpdateIntervalMs": 500
     },
